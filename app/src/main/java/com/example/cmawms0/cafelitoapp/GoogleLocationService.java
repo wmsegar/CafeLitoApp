@@ -60,6 +60,7 @@ public class GoogleLocationService implements
         if(mGoogleApiClient.isConnected()){
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
+            Log.i(TAG, "Location services disconnected");
         }
     }
 
@@ -68,9 +69,13 @@ public class GoogleLocationService implements
 
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null){
+            Log.i(TAG, "location == null");
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }else{
-            mLocationCallback.handleNewLocation(location);
+            Log.i(TAG, "location != null");
+            location.reset();
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            //mLocationCallback.handleNewLocation(location);
         }
     }
 
