@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">CafeLitoApp</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="drink_array">
+        <item>Americano</item>
+        <item>Cappuccino</item>
+        <item>Latte</item>
+        <item>Tea</item>
+    </string-array>
+
+    <string-array name="size_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
 </resources>

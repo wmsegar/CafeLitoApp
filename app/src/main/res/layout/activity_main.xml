@@ -8,18 +8,87 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtLatLong"
-        android:layout_marginTop="67dp"
+        android:text="Nearest Coffeeshop"
+        android:id="@+id/txtNearestCoffeeshop"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nearest Coffeeshop"
-        android:id="@+id/txtNearestCoffeeshop"
-        android:layout_below="@+id/txtLatLong"
+        android:text="Drink"
+        android:id="@+id/txtDrink"
+        android:layout_marginTop="26dp"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:textStyle="bold"
+        android:layout_below="@+id/txtNearestCoffeeshop"
+        android:layout_alignEnd="@+id/txtSize" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/drinkSpinner"
+        android:spinnerMode="dropdown"
+        android:minWidth="300dp"
+        android:layout_below="@+id/txtDrink"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size"
+        android:id="@+id/txtSize"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:textStyle="bold"
+        android:layout_below="@+id/drinkSpinner"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sizeSpinner"
+        android:spinnerMode="dropdown"
+        android:minWidth="300dp"
+        android:layout_below="@+id/txtSize"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtLatLong"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_marginBottom="23dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/txtName"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/nameTextField"
+        android:layout_below="@+id/txtName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:enabled="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Give Me Coffee!!"
+        android:id="@+id/btnOrderCoffee"
+        android:layout_above="@+id/txtLatLong"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:onClick="submitCoffee" />
+
 </RelativeLayout>
