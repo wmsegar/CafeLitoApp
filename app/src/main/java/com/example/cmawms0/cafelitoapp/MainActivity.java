@@ -12,13 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cmawms0.cafelitoapp.data.CoffeeShop;
+import com.example.cmawms0.cafelitoapp.service.CoffeeOrderService;
+import com.example.cmawms0.cafelitoapp.service.CoffeeOrderServiceCallback;
 import com.example.cmawms0.cafelitoapp.service.CoffeeShopService;
 import com.example.cmawms0.cafelitoapp.service.CoffeeShopServiceCallback;
 
 
-public class MainActivity extends Activity implements GoogleLocationService.LocationCallback, CoffeeShopServiceCallback{
+public class MainActivity extends Activity implements GoogleLocationService.LocationCallback, CoffeeShopServiceCallback, CoffeeOrderServiceCallback{
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private GoogleLocationService mGoogleLocationService;
@@ -30,6 +33,8 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     private TextView txtName;
     private EditText nameTextField;
     private CoffeeShopService service;
+    private CoffeeOrderService orderService;
+    private String openStreetMapId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,7 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     public void serviceSuccess(CoffeeShop coffeeShop) {
 
         txtNearestCoffeeshop.setText("Your coffee will be ready for pick up at: " + coffeeShop.getName());
+        openStreetMapId = coffeeShop.getOpenStreetMapId();
     }
 
     @Override
@@ -91,6 +97,18 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     }
 
     public void submitCoffee (View view){
+        //Toast.makeText(this, openStreetMapId, Toast.LENGTH_LONG).show();
+        orderService = new CoffeeOrderService(this);
+        orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(),sizeSpinner.getSelectedItem().toString(),txtName.getText().toString(),openStreetMapId);
+    }
+
+    @Override
+    public void orderSuccess() {
+        Toast.makeText(this, "This didn't blow up!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void orderFailure(Exception exception) {
 
     }
 }
