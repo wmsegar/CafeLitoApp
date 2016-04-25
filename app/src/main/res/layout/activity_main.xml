@@ -73,14 +73,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/nameTextField"
         android:layout_below="@+id/txtName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:enabled="true"
-        android:editable="false" />
+        android:editable="false"
+        android:singleLine="true" />
 
     <Button
         android:layout_width="wrap_content"

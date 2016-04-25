@@ -30,7 +30,6 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     private Spinner drinkSpinner;
     private Spinner sizeSpinner;
     private Button btnOrderCoffee;
-    private TextView txtName;
     private EditText nameTextField;
     private CoffeeShopService service;
     private CoffeeOrderService orderService;
@@ -42,7 +41,6 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
         setContentView(R.layout.activity_main);
         txtLatLong = (TextView) findViewById(R.id.txtLatLong);
         txtNearestCoffeeshop = (TextView) findViewById(R.id.txtNearestCoffeeshop);
-        txtName = (TextView) findViewById(R.id.txtName);
         nameTextField = (EditText) findViewById(R.id.nameTextField);
 
         //Bind Drink values to Spinner
@@ -98,13 +96,19 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
 
     public void submitCoffee (View view){
         //Toast.makeText(this, openStreetMapId, Toast.LENGTH_LONG).show();
+
         orderService = new CoffeeOrderService(this);
-        orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(),sizeSpinner.getSelectedItem().toString(),txtName.getText().toString(),openStreetMapId);
+        if(openStreetMapId != null){
+            orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(),sizeSpinner.getSelectedItem().toString(),nameTextField.getText().toString(),openStreetMapId);
+        } else{
+            Toast.makeText(this,"There are no coffee shops near you", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
     public void orderSuccess() {
-        Toast.makeText(this, "This didn't blow up!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Order has been sent", Toast.LENGTH_LONG).show();
     }
 
     @Override

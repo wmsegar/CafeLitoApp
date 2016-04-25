@@ -48,7 +48,7 @@ public class CoffeeOrderService {
                 try {
                     coffeeType.put("name", drink);
                     order.put("type", coffeeType);
-                    order.put("sizes", size);
+                    order.put("size", size);
                     order.put("drinker", name);
                     order.put("coffeeShopId", openStreetMapId);
 
@@ -102,6 +102,8 @@ public class CoffeeOrderService {
                     callback.orderFailure(error);
                     return;
                 }
+
+                callback.orderSuccess();
 
             }
         }.execute();
