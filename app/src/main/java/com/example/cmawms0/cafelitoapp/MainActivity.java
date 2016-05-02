@@ -115,4 +115,8 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     public void orderFailure(Exception exception) {
 
     }
+
+    public void crashMe(){
+
+    }
 }

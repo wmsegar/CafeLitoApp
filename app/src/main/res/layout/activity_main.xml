@@ -87,9 +87,18 @@
         android:layout_height="wrap_content"
         android:text="Give Me Coffee!!"
         android:id="@+id/btnOrderCoffee"
-        android:layout_above="@+id/txtLatLong"
+        android:onClick="submitCoffee"
+        android:layout_below="@+id/nameTextField"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crash Me"
+        android:id="@+id/button"
+        android:layout_below="@+id/btnOrderCoffee"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:onClick="submitCoffee" />
+        android:layout_marginTop="21dp"
+        android:onClick="crashMe" />
 
 </RelativeLayout>
