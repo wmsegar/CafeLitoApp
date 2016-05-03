@@ -79,6 +79,7 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
         txtLatLong.setText(Double.toString(location.getLatitude()) + " " + Double.toString(location.getLongitude()));
         service = new CoffeeShopService(this);
         service.findNearestCoffeeShop(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
+        //service.findNearestCoffeeShop("37.422006", "-122.084095");
 
     }
 
