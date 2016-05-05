@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:text="Drink"
         android:id="@+id/txtDrink"
-        android:layout_marginTop="26dp"
         android:textSize="@dimen/activity_horizontal_margin"
         android:textStyle="bold"
-        android:layout_below="@+id/txtNearestCoffeeshop"
-        android:layout_alignEnd="@+id/txtSize" />
+        android:layout_above="@+id/drinkSpinner"
+        android:layout_alignEnd="@+id/txtSize"
+        android:layout_marginBottom="19dp" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -30,8 +30,8 @@
         android:id="@+id/drinkSpinner"
         android:spinnerMode="dropdown"
         android:minWidth="300dp"
-        android:layout_below="@+id/txtDrink"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/txtSize"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
         android:id="@+id/txtSize"
         android:textSize="@dimen/activity_horizontal_margin"
         android:textStyle="bold"
-        android:layout_below="@+id/drinkSpinner"
+        android:layout_above="@+id/sizeSpinner"
         android:layout_centerHorizontal="true" />
 
     <Spinner
@@ -49,24 +49,15 @@
         android:id="@+id/sizeSpinner"
         android:spinnerMode="dropdown"
         android:minWidth="300dp"
-        android:layout_below="@+id/txtSize"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtLatLong"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
         android:id="@+id/txtName"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/nameTextField"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -75,12 +66,11 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/nameTextField"
-        android:layout_below="@+id/txtName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
         android:enabled="true"
         android:editable="false"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:layout_above="@+id/btnOrderCoffee"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -88,17 +78,37 @@
         android:text="Give Me Coffee!!"
         android:id="@+id/btnOrderCoffee"
         android:onClick="submitCoffee"
-        android:layout_below="@+id/nameTextField"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/txtLatLong"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crash Me"
         android:id="@+id/button"
-        android:layout_below="@+id/btnOrderCoffee"
+        android:onClick="crashMe"
+        android:layout_alignTop="@+id/txtLatLong"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View on Map"
+        android:id="@+id/btnShowCoffeeShop"
+        android:layout_below="@+id/txtNearestCoffeeshop"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:onClick="crashMe" />
+        android:onClick="showCoffeeShop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtLatLong"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

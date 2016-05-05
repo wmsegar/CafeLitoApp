@@ -1,6 +1,7 @@
 package com.example.cmawms0.cafelitoapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,11 +30,15 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     private TextView txtNearestCoffeeshop;
     private Spinner drinkSpinner;
     private Spinner sizeSpinner;
-    private Button btnOrderCoffee;
     private EditText nameTextField;
     private CoffeeShopService service;
     private CoffeeOrderService orderService;
     private String openStreetMapId;
+    private String coffeeShopLat;
+    private String coffeeShopLong;
+    private String coffeeShopName;
+    Double currentLat;
+    Double currentLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,9 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
         service.findNearestCoffeeShop(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
         //service.findNearestCoffeeShop("37.422006", "-122.084095");
 
+        currentLat = location.getLatitude();
+        currentLong = location.getLongitude();
+
     }
 
     @Override
@@ -88,6 +96,9 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
 
         txtNearestCoffeeshop.setText("Your coffee will be ready for pick up at: " + coffeeShop.getName());
         openStreetMapId = coffeeShop.getOpenStreetMapId();
+        coffeeShopLat = coffeeShop.getLatitude();
+        coffeeShopLong = coffeeShop.getLongitude();
+        coffeeShopName = coffeeShop.getName();
     }
 
     @Override
@@ -115,6 +126,17 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     @Override
     public void orderFailure(Exception exception) {
 
+    }
+
+    public void showCoffeeShop(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("coffeeShopLat", coffeeShopLat);
+        intent.putExtra("coffeeShopLong", coffeeShopLong);
+        intent.putExtra("coffeeShopName", coffeeShopName);
+        intent.putExtra("currentLat", currentLat);
+        intent.putExtra("currentLong", currentLong);
+
+        startActivity(intent);
     }
 
     public void crashMe(){

@@ -1,10 +1,13 @@
 package com.example.cmawms0.cafelitoapp;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -16,6 +19,7 @@ public class MapsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         setUpMapIfNeeded();
     }
 
@@ -60,6 +64,22 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+
+        mMap.setMyLocationEnabled(true);
+
+        Bundle coffeeShopData = getIntent().getExtras();
+        String coffeeShopName = coffeeShopData.getString("coffeeShopName");
+        Double coffeeShopLat = Double.parseDouble(coffeeShopData.getString("coffeeShopLat"));
+        Double coffeeShopLong = Double.parseDouble(coffeeShopData.getString("coffeeShopLong"));
+
+        Double currentLat = coffeeShopData.getDouble("currentLat");
+        Double currentLong = coffeeShopData.getDouble("currentLong");
+
+        //Location of Nearest Coffeeshop
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(coffeeShopLat,coffeeShopLong), 12));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(coffeeShopLat, coffeeShopLong)).title(coffeeShopName)).showInfoWindow();
+
+
     }
 }
