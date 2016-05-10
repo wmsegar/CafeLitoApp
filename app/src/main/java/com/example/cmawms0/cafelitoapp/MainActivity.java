@@ -2,15 +2,23 @@ package com.example.cmawms0.cafelitoapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +30,7 @@ import com.example.cmawms0.cafelitoapp.service.CoffeeShopService;
 import com.example.cmawms0.cafelitoapp.service.CoffeeShopServiceCallback;
 
 
-public class MainActivity extends Activity implements GoogleLocationService.LocationCallback, CoffeeShopServiceCallback, CoffeeOrderServiceCallback{
+public class MainActivity extends AppCompatActivity implements GoogleLocationService.LocationCallback, CoffeeShopServiceCallback, CoffeeOrderServiceCallback{
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private GoogleLocationService mGoogleLocationService;
@@ -39,6 +47,12 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
     private String coffeeShopName;
     Double currentLat;
     Double currentLong;
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +72,26 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
         //Bind Size values to Spinner
        sizeSpinner = (Spinner) findViewById(R.id.sizeSpinner);
         ArrayAdapter<CharSequence> sizeAdapter = ArrayAdapter.createFromResource(this,
-               R.array.size_array, android.R.layout.simple_spinner_dropdown_item);
+                R.array.size_array, android.R.layout.simple_spinner_dropdown_item);
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(sizeAdapter);
 
         //Create new instance of GoogleLocationService
         mGoogleLocationService = new GoogleLocationService(this, this);
+
+        //Set ListView for Side Navigation
+        mDrawerList = (ListView) findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        //Helper method to populate menu
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     @Override
@@ -111,6 +139,10 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
 
         orderService = new CoffeeOrderService(this);
         if(openStreetMapId != null){
+            if (TextUtils.isEmpty(nameTextField.getText().toString())){
+                Toast.makeText(this,"Please enter your name", Toast.LENGTH_LONG).show();
+                return;
+            }
             orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(),sizeSpinner.getSelectedItem().toString(),nameTextField.getText().toString(),openStreetMapId);
         } else{
             Toast.makeText(this,"There are no coffee shops near you", Toast.LENGTH_LONG).show();
@@ -139,7 +171,85 @@ public class MainActivity extends Activity implements GoogleLocationService.Loca
         startActivity(intent);
     }
 
-    public void crashMe(){
 
+    public void crashMe(){
+        //This method links to the Crash Me button to simulate an app crash for testing
+    }
+
+    private void addDrawerItems(){
+        //This method is used to add the items to the Navigation Menu
+        String [] menuArray = {"Home", "Order", "Locations"};
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,menuArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "It worked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupDrawer(){
+        //This method gets called in OnCreate to setup the navigation drawer to toggle
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_closed){
+            /**Called when the drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView){
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); //create call to onPrepareOptionsMenu()
+            }
+
+            /**Called when the drawer has settled in a completely closed state. */
+            public void onDrawerClosed (View view){
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); //creates call to onPrepareOptionsMenu
+
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
