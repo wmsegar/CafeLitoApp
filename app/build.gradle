@@ -1,4 +1,25 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.dynatrace.ruxit.tools:android:+'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.dynatrace.ruxit.tools.android'
+ruxitConfig {
+    defaults {
+        applicationId 'ad63e050-8cdb-423b-9bc3-29b83dedfe11'
+        environmentId 'ndi44039'
+    }
+}
 
 android {
     compileSdkVersion 22
