@@ -73,8 +73,10 @@ public class CoffeeShopService {
 
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
+                        error = e;
                     } catch (IOException e) {
                         e.printStackTrace();
+                        error = e;
                     }
                     return null;
                 }

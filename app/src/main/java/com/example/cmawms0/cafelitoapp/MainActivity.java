@@ -143,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements GoogleLocationSer
                 Toast.makeText(this,"Please enter your name", Toast.LENGTH_LONG).show();
                 return;
             }
-            orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(),sizeSpinner.getSelectedItem().toString(),nameTextField.getText().toString(),openStreetMapId);
+            orderService.submitNewOrder(drinkSpinner.getSelectedItem().toString(), sizeSpinner.getSelectedItem().toString(), nameTextField.getText().toString(), openStreetMapId);
+
         } else{
             Toast.makeText(this,"There are no coffee shops near you", Toast.LENGTH_LONG).show();
         }
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements GoogleLocationSer
     @Override
     public void orderSuccess() {
         Toast.makeText(this, "Order has been sent", Toast.LENGTH_LONG).show();
+        nameTextField.setText("");
     }
 
     @Override
